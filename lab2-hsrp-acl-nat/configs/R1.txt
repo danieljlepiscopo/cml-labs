@@ -1,0 +1,200 @@
+Building configuration...
+
+Current configuration : 4603 bytes
+!
+version 15.9
+service timestamps debug datetime msec
+service timestamps log datetime msec
+no service password-encryption
+!
+hostname R1
+!
+boot-start-marker
+boot-end-marker
+!
+!
+!
+no aaa new-model
+!
+!
+!
+mmi polling-interval 60
+no mmi auto-configure
+no mmi pvc
+mmi snmp-timeout 180
+!         
+!
+!
+!
+!
+!
+!
+!
+!
+!
+!
+no ip domain lookup
+ip cef
+ipv6 unicast-routing
+ipv6 cef
+!
+multilink bundle-name authenticated
+!
+!
+!
+!
+!
+redundancy
+!         
+!
+! 
+!
+!
+!
+!
+!
+!
+!
+!
+!
+!
+!
+!
+interface Loopback0
+ ip address 1.1.1.1 255.255.255.255
+ ip ospf 1 area 0
+ ipv6 address FD00:1::1/128
+ ipv6 ospf 1 area 0
+!
+interface GigabitEthernet0/0
+ description Connection to ISP
+ ip address 100.0.0.2 255.255.255.252
+ ip nat outside
+ ip virtual-reassembly in
+ duplex auto
+ speed auto
+ media-type rj45
+ ipv6 address FD00:100::2/64
+ ipv6 enable
+!
+interface GigabitEthernet0/1
+ description Connection to R2
+ ip address 12.0.0.1 255.255.255.252
+ ip nat inside
+ ip virtual-reassembly in
+ ip ospf 1 area 0
+ duplex auto
+ speed auto
+ media-type rj45
+ ipv6 address FD00:12::1/64
+ ipv6 enable
+ ipv6 ospf 1 area 0
+!
+interface GigabitEthernet0/2
+ description Connection to SW1
+ ip address 10.10.10.2 255.255.255.0
+ ip access-group VLAN20_ADMIN in
+ ip nat inside
+ ip virtual-reassembly in
+ standby version 2
+ standby 10 ip 10.10.10.1
+ standby 10 priority 110
+ standby 10 preempt
+ standby 110 ipv6 FD00:10::1/64
+ standby 110 priority 110
+ standby 110 preempt
+ duplex auto
+ speed auto
+ media-type rj45
+ ipv6 address FD00:10::2/64
+ ipv6 enable
+ ipv6 traffic-filter VLAN20_ADMIN_V6 in
+!
+interface GigabitEthernet0/3
+ description Connection to SW2
+ ip address 10.20.20.3 255.255.255.0
+ ip nat inside
+ ip virtual-reassembly in
+ standby version 2
+ standby 20 ip 10.20.20.1
+ standby 120 ipv6 FD00:20::1/64
+ duplex auto
+ speed auto
+ media-type rj45
+ ipv6 address FD00:20::3/64
+ ipv6 enable
+!
+router ospf 1
+ router-id 1.1.1.1
+ passive-interface default
+ no passive-interface GigabitEthernet0/1
+!
+ip forward-protocol nd
+!
+!
+no ip http server
+no ip http secure-server
+ip nat inside source list 1 interface GigabitEthernet0/0 overload
+ip route 0.0.0.0 0.0.0.0 100.0.0.1
+!
+ip access-list extended VLAN20_ADMIN
+ permit ip host 10.20.20.11 host 10.20.20.12
+ deny   ip 10.10.10.0 0.0.0.255 host 10.20.20.12
+ permit ip any any
+!
+ipv6 route ::/0 GigabitEthernet0/0 FD00:100::1
+ipv6 router ospf 1
+ router-id 1.1.1.1
+ passive-interface default
+!
+ipv6 ioam timestamp
+!
+!
+access-list 1 permit 10.10.10.0 0.0.0.255
+access-list 1 permit 10.20.20.0 0.0.0.255
+!
+ipv6 access-list VLAN20_ADMIN_V6
+ permit ipv6 host FD00:20::11 host FD00:20::12
+ deny ipv6 FD00:10::/64 host FD00:20::12
+ permit ipv6 any any
+!
+control-plane
+!
+banner exec ^C
+**************************************************************************
+* IOSv is strictly limited to use for evaluation, demonstration and IOS  *
+* education. IOSv is provided as-is and is not supported by Cisco's      *
+* Technical Advisory Center. Any use or disclosure, in whole or in part, *
+* of the IOSv Software or Documentation to any third party for any       *
+* purposes is expressly prohibited except as otherwise authorized by     *
+* Cisco in writing.                                                      *
+**************************************************************************^C
+banner incoming ^C
+**************************************************************************
+* IOSv is strictly limited to use for evaluation, demonstration and IOS  *
+* education. IOSv is provided as-is and is not supported by Cisco's      *
+* Technical Advisory Center. Any use or disclosure, in whole or in part, *
+* of the IOSv Software or Documentation to any third party for any       *
+* purposes is expressly prohibited except as otherwise authorized by     *
+* Cisco in writing.                                                      *
+**************************************************************************^C
+banner login ^C
+**************************************************************************
+* IOSv is strictly limited to use for evaluation, demonstration and IOS  *
+* education. IOSv is provided as-is and is not supported by Cisco's      *
+* Technical Advisory Center. Any use or disclosure, in whole or in part, *
+* of the IOSv Software or Documentation to any third party for any       *
+* purposes is expressly prohibited except as otherwise authorized by     *
+* Cisco in writing.                                                      *
+**************************************************************************^C
+!
+line con 0
+ logging synchronous
+line aux 0
+line vty 0 4
+ login
+ transport input none
+!
+no scheduler allocate
+!
+end
