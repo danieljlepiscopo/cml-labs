@@ -2,6 +2,7 @@
 This lab demonstrates dual-stack dynamic routing using OSPFv2 (IPv4), OSPFv3 (IPv6), and eBGP between a customer.
 
 ## Diagrams
+### Logical Topology
 ![Logical Topology](lab1_topology.pdf)
 
 ## Key Subnets
