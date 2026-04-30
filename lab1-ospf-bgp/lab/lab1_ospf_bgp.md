@@ -490,8 +490,9 @@ Command Breakdown:
 * `address-family ipv4`: Activates IPv4 address family for BGP routing.
 * `neighbor 100.0.0.1 activate`: Activates a BGP neighbor relationship with IP address 100.0.0.1.
 * `address-family ipv6`: Activates IPv6 address family for BGP routing.
+* `neighbor 100.0.0.2 default-originate`: Advertise the default route to 100.0.0.2.
 * `neighbor fd00:100::2 activate`: Activates a BGP neighbor relationship with IP address fd00:100::2.
-* `neighbor fd00:100::2 default-originate`: Advertise the default route of fd00:100::2.
+* `neighbor fd00:100::2 default-originate`: Advertise the default route to fd00:100::2.
 
 **Verify**
 ```bash
