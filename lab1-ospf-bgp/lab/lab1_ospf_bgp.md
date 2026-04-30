@@ -421,7 +421,7 @@ show ip ospf neighbor
 show ipv6 ospf neighbor
 ```
 
-With OSPFv2 and OSPFv3 now configured within our enterprise network, IP routing will now dynamically be learned for both IPv6/IPv6. Now is the WN connection between R1 and ISP, and establishing a BGP connection between both of them.
+With OSPFv2 and OSPFv3 now configured within our enterprise network, IP routing will now dynamically be learned for both IPv4/IPv6. Next, we'll focus on the WAN connection between R1 and ISP, and establishing a BGP connection between both of them.
 
 ### **Part 4: BGP Configuration (IPv4 + IPv6)**
 When it comes to connections between different IGPs, this is where EGP shines with eBGP. With BGP being a path-vector protocol, its function is to be able to exchange network information between different autonomous systems (in this case, AS65000 and AS65001). A TCP connection is established, and peering allows for policies, security, and scalability to happen between different IGPs. Convergence takes longer compared to OSPF, but it is the best way to connect networks together.
