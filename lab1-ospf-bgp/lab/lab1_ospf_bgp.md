@@ -13,7 +13,7 @@ Without going too deep into all of these concepts, in this lab, I utilized **OSP
 
 We will go through these concepts in this specific lab:
 1. **Initial Setup**
-2. **IP Addressing (IPv4/IPv6)**
+2. **IP Addressing + Default Routes (IPv4/IPv6)**
 3. **OSPF Configuration (OSPFv2 + OSPFv3)**
 4. **BGP Configuration (IPv4/IPv6)**
 5. **Endpoint Configuration**
