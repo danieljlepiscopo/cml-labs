@@ -2,7 +2,7 @@
 
 ### **Part 1: Initial Setup**
 
-# R1, R2, ISP, SW1, SW2:
+R1, R2, ISP, SW1, SW2:
 ```bash
 conf t
 !
