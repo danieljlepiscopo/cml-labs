@@ -31,7 +31,7 @@ R1, R2, R3, ISP:
 ```bash
 conf t
 !
-hostname R3
+hostname XXX
 !
 no ip domain-name
 !
@@ -43,7 +43,7 @@ do wr
 end
 ```
 Command Breakdown:
-* `hostname`: Assigns a hostname to a device.
+* `hostname`: Assigns a hostname to a device (left it with XXX to showcase the different devices).
 * `no ip domain-name`: Prevents a device from trying to resolve a mistyped command as a hostname.
 * * `logging synchronous`: Stops system messages from interrupting CLI command input.
 
