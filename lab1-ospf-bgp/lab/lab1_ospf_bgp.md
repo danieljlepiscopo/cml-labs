@@ -27,11 +27,11 @@ To set up this lab, I wanted to add an initial setup when it comes to assigning 
 - Avoid delays if mistyping a command
 - Add a new line if system messages occur
 
-R1, R2, R3, ISP:
+R1:
 ```bash
 conf t
 !
-hostname XXX
+hostname R1
 !
 no ip domain-name
 !
@@ -42,10 +42,59 @@ exit
 do wr
 end
 ```
+R2:
+```bash
+conf t
+!
+hostname R2
+!
+no ip domain-name
+!
+line console 0
+ logging synchronous
+exit
+!
+do wr
+end
+```
+
+R3:
+```bash
+conf t
+!
+hostname R3
+!
+no ip domain-name
+!
+line console 0
+ logging synchronous
+exit
+!
+do wr
+end
+
+```
+
+ISP:
+```bash
+conf t
+!
+hostname ISP
+!
+no ip domain-name
+!
+line console 0
+ logging synchronous
+exit
+!
+do wr
+end
+
+```
 Command Breakdown:
-* `hostname`: Assigns a hostname to a device (left it with XXX to showcase the different devices).
+* `hostname`: Assigns a hostname to a device.
 * `no ip domain-name`: Prevents a device from trying to resolve a mistyped command as a hostname.
-* * `logging synchronous`: Stops system messages from interrupting CLI command input.
+* `logging synchronous`: Stops system messages from interrupting CLI command input.
 
 **Verify**
 
@@ -367,6 +416,7 @@ Command Breakdown:
 
 **Verify**
 ```bash
+show ip protocols
 show ip ospf neighbor
 show ipv6 ospf neighbor
 ```
@@ -445,6 +495,7 @@ Command Breakdown:
 
 **Verify**
 ```bash
+show bgp summary
 show bgp ipv4 unicast summary
 show bgp ipv6 unicast summary
 ```
