@@ -102,7 +102,7 @@ Command Breakdown:
 show running-config
 ```
 
-With this very simple setup completed in the lab, we should be all good to continue with the more sophisticated aspects of this lab.
+With this very simple setup completed, we should be all good to continue with the more sophisticated aspects of this lab.
 
 ### **Part 2: IP Addressing + Default Routes (IPv4/IPv6)**
 When it comes to configuring IP addresses on Cisco, we want to make sure that we have the correct syntax between IPv4 and IPv6, as well as enabling the interface. I'm also going to be adding static default routes on **R1** to **ISP** as a best practice. This ensures that if any IPs don't match within R1's routes, it will automatically be set to the ISP router:
