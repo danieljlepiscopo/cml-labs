@@ -417,6 +417,7 @@ Command Breakdown:
 **Verify**
 ```bash
 show ip protocols
+show ospf database
 show ip ospf neighbor
 show ipv6 ospf neighbor
 ```
