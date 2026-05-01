@@ -117,7 +117,14 @@ With this very simple setup completed, we should be all good to continue with se
 
 ### **Part 2: VLANs**
 
+Next, we'll need to have switches in our topology that our hosts can connect to, as well as virtually break up our LANs into separate VLANs. To do this, I created VLAN10 for the 'Marketing' department and the 'IT' department in our enterprise network. I did this because it would make it easier to implement HSRP, ACLs, and NAT when working with VLANs, as well as segmenting the network.
 
+A few caveats about this topology are that I:
+1. Didn't use trunks
+2. ROAS (Router on a Stick)
+3. SVI (Switch Virtual Interfaces)
+
+I only have access ports to the interfaces between the hosts and the uplink routers - I mainly did this to make the topology easier, as well as focus on the HSRP, ACLs, and NAT of this lab.
 
 SW1:
 ```bash
@@ -125,8 +132,7 @@ conf t
 !
 vlan 10
  name MARKETING
-vlan 20
- name IT
+exit
 !
 int gi0/0
  switchport mode access
@@ -156,10 +162,9 @@ SW2:
 ```bash
 conf t
 !
-vlan 10
- name MARKETING
 vlan 20
  name IT
+exit
 !
 int gi0/0
  switchport mode access
@@ -184,6 +189,17 @@ exit
 do wr
 end
 ```
+Command Breakdown:
+* `switchport mode access`: Sets the interface as an access port.
+* `switchport access vlan XX`: Sets the VLAN associated with the access port.
+
+**Verify**
+```bash
+show vlan brief
+show vlans
+```
+
+With that, our Layer 2 configuration is complete! Let's now move on to the IP addressing and static routing of this lab.
 
 ### **Part 3: IP Addresses + Static Routes (IPv4/IPv6)**
 
