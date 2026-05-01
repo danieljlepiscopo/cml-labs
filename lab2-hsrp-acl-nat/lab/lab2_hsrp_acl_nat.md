@@ -1,12 +1,33 @@
 # HSRP + ACL + NAT Lab
 
+In modern-day computer networking, we strive to implement High Availability (HA) designs to continue providing services to users during downtime, glitches, or failures. To do this, we need to be able to add redundancy to a system on every level: power, data, geographic, and pathway. Essentially, load-balancing a system, backing up data, failovers, and using the appropriate networking protocols that HA designs need to function properly. 
+
+A few of these networking protocols I want to go over in this lab are HSRP, ACLs, and NAT. These protocols I'll dig into much deeper with every step of this lab, but as an overview, these three protocols help ensure a HA design by making sure users are abstracted from a router failover, security practices like Least Privilege, and can access the internet with an IPv4 IP address.
+
+Here is the step-by-step we're going to go over in this lab:
+1. **Initial Setup**
+2. **VLANs**
+3. **IP Addresses + Static Routes (IPv4/IPv6)**
+4. **OSPF Configuration (OSPFv2 + OSPFv3)**
+5. **HSRP (IPv4/IPv6)**
+6. **Extended ACLs (IPv4/IPv6)**
+7. **NAT Configuration**
+8. **Endpoint Configuration**
+
+Let's take a look at how these protocols ensure an HA design.
+
 ### **Part 1: Initial Setup**
 
-R1, R2, ISP, SW1, SW2:
+To set up this lab, I wanted to add an initial setup when it comes to assigning hostnames and making sure there weren't any interruptions to console configurations through CML. For this, I wanted:
+- Hostnames set
+- Avoid delays if mistyping a command
+- Add a new line if system messages occur
+
+R1:
 ```bash
 conf t
 !
-hostname XXX
+hostname R1
 !
 no ip domain-lookup
 !
@@ -18,7 +39,85 @@ do wr
 end
 ```
 
+R2:
+```bash
+conf t
+!
+hostname R2
+!
+no ip domain-lookup
+!
+line console 0
+ logging synchronous
+exit
+!
+do wr
+end
+```
+
+ISP:
+```bash
+conf t
+!
+hostname ISP
+!
+no ip domain-lookup
+!
+line console 0
+ logging synchronous
+exit
+!
+do wr
+end
+```
+
+SW1:
+```bash
+conf t
+!
+hostname SW1
+!
+no ip domain-lookup
+!
+line console 0
+ logging synchronous
+exit
+!
+do wr
+end
+```
+
+SW2
+```bash
+conf t
+!
+hostname SW2
+!
+no ip domain-lookup
+!
+line console 0
+ logging synchronous
+exit
+!
+do wr
+end
+```
+Command Breakdown:
+* `hostname`: Assigns a hostname to a device.
+* `no ip domain-name`: Prevents a device from trying to resolve a mistyped command as a hostname.
+* `logging synchronous`: Stops system messages from interrupting CLI command input.
+
+**Verify**
+
+```bash
+show running-config
+```
+
+With this very simple setup completed, we should be all good to continue with setting up the VLANs for this lab.
+
 ### **Part 2: VLANs**
+
+
 
 SW1:
 ```bash
@@ -398,6 +497,8 @@ end
 ```
 
 ### **Part 7: NAT Configuration**
+
+NAT is ONLY for IPv4; IPv6 is globally routable, so there's no need for it on IPv6.
 
 R1:
 ```bash
