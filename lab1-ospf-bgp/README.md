@@ -2,14 +2,14 @@
 This lab demonstrates dual-stack dynamic routing using OSPFv2 (IPv4), OSPFv3 (IPv6), and an eBGP connection between a CE and PE router.
 
 ## Diagrams
-### Logical Topology
-![Logical Topology](topology/lab1_topology.png)
-
 ### Topology Overview
 - **R1** = Edge Router (Customer Edge or CE)
 - **R2/R3** = Internal Routers
 - **ISP** = Edhe Router (Provider Edge or PE)
 - **SVR1** = External Network (Simulated Internet)
+
+### Logical Topology
+![Logical Topology](topology/lab1_topology.png)
 
 ## Key Subnets
 | Device | Interface | IPv4 | IPv6 |
