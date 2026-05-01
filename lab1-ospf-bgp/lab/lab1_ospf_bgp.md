@@ -112,7 +112,7 @@ R1:
 ip route 0.0.0.0 0.0.0.0 100.0.0.1
 ipv6 route ::/0 GigabitEthernet0/0 fd00:100::1
 ```
-* As you can see, I've set an IPv4 default route to the ISP's next hop address, as well as a recursive IPv6 default route through R1's Gi0/0 interface.
+* As you can see, I've set an IPv4 default route to the ISP's next hop address, as well as a fully specified IPv6 static default route through R1's Gi0/0 interface.
 
 One last point on this step is to make sure you enable IPv6 routing using the IPv6 unicast command:
 ```bash
@@ -417,7 +417,7 @@ Command Breakdown:
 **Verify**
 ```bash
 show ip protocols
-show ospf database
+show ip ospf database
 show ip ospf neighbor
 show ipv6 ospf neighbor
 ```
@@ -425,7 +425,7 @@ show ipv6 ospf neighbor
 With OSPFv2 and OSPFv3 now configured within our enterprise network, IP routing will now dynamically be learned for both IPv4/IPv6. Next, we'll focus on the WAN connection between R1 and ISP, and establishing a BGP connection between both of them.
 
 ### **Part 4: BGP Configuration (IPv4 + IPv6)**
-When it comes to connections between different IGPs, this is where EGP shines with eBGP. With BGP being a path-vector protocol, its function is to be able to exchange network information between different autonomous systems (in this case, AS65000 and AS65001). A TCP connection is established, and peering allows for policies, security, and scalability to happen between different IGPs. Convergence takes longer compared to OSPF, but it is the best way to connect networks together.
+When it comes to connections between different IGPs, this is where EGP shines with eBGP. With BGP being a path-vector protocol, its function is to be able to exchange network information between different autonomous systems (in this case, AS65000 and AS65001). A TCP connection is established, and peering allows for policies, security, and scalability to happen between different IGPs. Convergence takes longer compared to OSPF, but this is because it prioritizes stability and policy-based routing.
 
 R1:
 ```bash
@@ -491,9 +491,9 @@ Command Breakdown:
 * `address-family ipv4`: Activates IPv4 address family for BGP routing.
 * `neighbor 100.0.0.1 activate`: Activates a BGP neighbor relationship with IP address 100.0.0.1.
 * `address-family ipv6`: Activates IPv6 address family for BGP routing.
-* `neighbor 100.0.0.2 default-originate`: Advertise the default route to 100.0.0.2.
+* `neighbor 100.0.0.2 default-originate`: Advertises the default route to the neighbor (100.0.0.2).
 * `neighbor fd00:100::2 activate`: Activates a BGP neighbor relationship with IP address fd00:100::2.
-* `neighbor fd00:100::2 default-originate`: Advertise the default route to fd00:100::2.
+* `neighbor fd00:100::2 default-originate`: Advertise the default route to the neighbor (fd00:100::2).
 
 **Verify**
 ```bash
@@ -505,7 +505,7 @@ show bgp ipv6 unicast summary
 With BGP established between R1 and ISP, our WAN connection is complete! Although BGP can go WAY more in-depth with policies and security, this gives a great overview of how BGP works at a fundamental level. Lastly, let's configure our External Server over the "internet".
 
 ### **Part 5: Endpoint Configuration**
-Our last step in this lab was to be able to connect to the external internet, showcasing this thought with an "external server," figuratively in the cloud. This gives us an idea of how ISPs have other connections as well as how an enterprise may still be able to connect over the internet through their edge router. 
+Our last step in this lab was to be able to connect to the external internet, showcasing this thought with an "external server," simulating an external network through the ISP. This gives us an idea of how ISPs have other connections as well as how an enterprise may still be able to connect over the internet through their edge router. 
 
 Here is the configuration I added to the external server in my lab:
 
