@@ -17,4 +17,4 @@ My goal for this repo is to build hands-on labs at the CCNP level. These labs wi
 | 2 | Lab 2 | HSRP + ACLs + NAT | Redundancy and Security |
 
 ### Automation
-I'm creating a separate folder for all my network automation projects to separate them from the conceptual CCNP concepts.
+I created a folder specifically for all my network automation projects to separate them from the conceptual CCNP concepts.
