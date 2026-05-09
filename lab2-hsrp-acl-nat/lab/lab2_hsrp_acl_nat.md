@@ -611,7 +611,7 @@ NAT (Network Address Translation) was invented in the 1990s to help conserve IPv
 2. **Dynamic NAT**
 3. **NAT Overload (PAT)**
 
-Static NAT and Dynamic NAT don't technically conserve IP addresses; however, NAT Overload (PAT) (Port Address Translation) has a one-to-many mapping. Meaning we only need one public IP address to create an unlimited number of private IP addresses in our own network. 
+Static NAT and Dynamic NAT don't technically conserve IP addresses; however, NAT Overload (PAT) (Port Address Translation) does so by utilizing port numbers to keep track of inside local and inside global translations. Meaning we only need one public IP address connected to the internet, and we can have at least 65,000 usable private IP addresses we can have in our LAN. 
 
 Let's take a look at how NAT Overload is configured:
 
