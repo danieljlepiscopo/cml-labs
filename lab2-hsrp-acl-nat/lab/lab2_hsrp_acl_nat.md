@@ -471,9 +471,11 @@ int gi0/2
  standby 10 ip 10.10.10.1
  standby 10 priority 110
  standby 10 preempt
+ standby 10 track gi0/0 20
  standby 110 ipv6 fd00:10::1/64
  standby 110 priority 110
  standby 110 preempt
+ standby 110 track gi0/0 20
 exit
 !
 do wr
@@ -519,9 +521,11 @@ int gi0/2
  standby 20 ip 10.20.20.1
  standby 20 priority 110
  standby 20 preempt
+ standby 20 track gi0/0 20
  standby 120 ipv6 fd00:20::1/64
  standby 120 priority 110
  standby 120 preempt
+ standby 120 track gi0/0 20
 exit
 !
 do wr
