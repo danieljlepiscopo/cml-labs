@@ -1,6 +1,8 @@
 Building configuration...
 
-Current configuration : 4603 bytes
+Current configuration : 4785 bytes
+!
+! Last configuration change at 05:19:40 UTC Wed May 13 2026
 !
 version 15.9
 service timestamps debug datetime msec
@@ -22,7 +24,7 @@ mmi polling-interval 60
 no mmi auto-configure
 no mmi pvc
 mmi snmp-timeout 180
-!         
+!
 !
 !
 !
@@ -43,9 +45,11 @@ multilink bundle-name authenticated
 !
 !
 !
-!
-redundancy
 !         
+redundancy
+!
+!
+track 1 interface GigabitEthernet0/0 line-protocol
 !
 ! 
 !
@@ -100,9 +104,11 @@ interface GigabitEthernet0/2
  standby 10 ip 10.10.10.1
  standby 10 priority 110
  standby 10 preempt
+ standby 10 track 1 decrement 20
  standby 110 ipv6 FD00:10::1/64
  standby 110 priority 110
  standby 110 preempt
+ standby 110 track 1 decrement 20
  duplex auto
  speed auto
  media-type rj45
@@ -131,7 +137,7 @@ router ospf 1
 !
 ip forward-protocol nd
 !
-!
+!         
 no ip http server
 no ip http secure-server
 ip nat inside source list 1 interface GigabitEthernet0/0 overload
