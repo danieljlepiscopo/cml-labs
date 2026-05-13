@@ -1,6 +1,8 @@
 Building configuration...
 
-Current configuration : 4234 bytes
+Current configuration : 4416 bytes
+!
+! Last configuration change at 05:21:09 UTC Wed May 13 2026
 !
 version 15.9
 service timestamps debug datetime msec
@@ -22,7 +24,7 @@ mmi polling-interval 60
 no mmi auto-configure
 no mmi pvc
 mmi snmp-timeout 180
-!         
+!
 !
 !
 !
@@ -43,9 +45,11 @@ multilink bundle-name authenticated
 !
 !
 !
-!
-redundancy
 !         
+redundancy
+!
+!
+track 1 interface GigabitEthernet0/0 line-protocol
 !
 ! 
 !
@@ -99,9 +103,11 @@ interface GigabitEthernet0/2
  standby 20 ip 10.20.20.1
  standby 20 priority 110
  standby 20 preempt
+ standby 20 track 1 decrement 20
  standby 120 ipv6 FD00:20::1/64
  standby 120 priority 110
  standby 120 preempt
+ standby 120 track 1 decrement 20
  duplex auto
  speed auto
  media-type rj45
