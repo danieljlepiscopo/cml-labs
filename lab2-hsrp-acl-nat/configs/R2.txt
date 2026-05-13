@@ -1,8 +1,8 @@
 Building configuration...
 
-Current configuration : 4416 bytes
+Current configuration : 4457 bytes
 !
-! Last configuration change at 05:21:09 UTC Wed May 13 2026
+! Last configuration change at 05:39:08 UTC Wed May 13 2026
 !
 version 15.9
 service timestamps debug datetime msec
@@ -121,7 +121,9 @@ interface GigabitEthernet0/3
  ip virtual-reassembly in
  standby version 2
  standby 10 ip 10.10.10.1
+ standby 10 preempt
  standby 110 ipv6 FD00:10::1/64
+ standby 110 preempt
  duplex auto
  speed auto
  media-type rj45
@@ -135,7 +137,7 @@ router ospf 1
 !
 ip forward-protocol nd
 !
-!
+!         
 no ip http server
 no ip http secure-server
 ip nat inside source list 1 interface GigabitEthernet0/0 overload
@@ -181,7 +183,7 @@ banner login ^C
 * purposes is expressly prohibited except as otherwise authorized by     *
 * Cisco in writing.                                                      *
 **************************************************************************^C
-!
+!         
 line con 0
  logging synchronous
 line aux 0
