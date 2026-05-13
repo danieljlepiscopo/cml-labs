@@ -466,16 +466,19 @@ R1 (Active):
 ```bash
 conf t
 !
+track 1 interface gi0/0 line-protocol
+exit
+!
 int gi0/2
  standby version 2
  standby 10 ip 10.10.10.1
  standby 10 priority 110
  standby 10 preempt
- standby 10 track gi0/0 20
+ standby 10 track 1 decrement 20
  standby 110 ipv6 fd00:10::1/64
  standby 110 priority 110
  standby 110 preempt
- standby 110 track gi0/0 20
+ standby 110 track 1 decrement 20
 exit
 !
 do wr
@@ -489,7 +492,11 @@ conf t
 int gi0/3
  standby version 2
  standby 10 ip 10.10.10.1
+ standby 10 priority 100
+ standby 10 preempt
  standby 110 ipv6 fd00:10::1/64
+ standby 110 priority 100
+ standby 110 preempt
 exit
 !
 do wr
@@ -505,7 +512,11 @@ conf t
 int gi0/3
  standby version 2
  standby 20 ip 10.20.20.1
+ standby 20 priority 100
+ standby 20 preempt
  standby 120 ipv6 fd00:20::1/64
+ standby 120 priority 100
+ standby 120 preempt
 exit
 !
 do wr
@@ -516,32 +527,38 @@ R2 (Active):
 ```bash
 conf t
 !
+track 1 interface gi0/0 line-protocol
+exit
+!
 int gi0/2
  standby version 2
  standby 20 ip 10.20.20.1
  standby 20 priority 110
  standby 20 preempt
- standby 20 track gi0/0 20
+ standby 20 track 1 decrement 20
  standby 120 ipv6 fd00:20::1/64
  standby 120 priority 110
  standby 120 preempt
- standby 120 track gi0/0 20
+ standby 120 track 1 decrement 20
 exit
 !
 do wr
 end
 ```
 Command Breakdown:
+* `track 1 interface gi0/0 line-protocol`: Creates tracking object 1 for Gi0/0's interface state (know if it is in an UP/UP or DOWN/DOWN state).
 * `standby version 2`: Supports IPv6 and increases the number of HSRP groups (from 256 - 4096).
 * `standby XX ip X.X.X.X`: Sets the virtual IPv4 address for the group.
 * `standby XX ipv6 XX:XX::X/XX`: Sets the virtual IPv6 address for the group. 
 * `standby XX priority XX`: Sets the priority of the group; the higher the priority is, the higher they're preferred (default 100).
 * `standby XX preempt`: Allows the router with the higher priority to immediately take over as the active router.
+* `standby XX track X decrement XX`: Decrements the standby group of the interface by XX priority amount (in case a link goes down).
 
 **Verify**
 ```bash
+show track
 show standby
-show hsrp
+show standby brief
 ```
 
 With HSRP now functional between R1 and R2 (both IPv4/IPv6), our FHRP is now set for this lab and our hosts in our enterprise network. Next, let's take a look at ACLs.
